@@ -28,10 +28,13 @@ struct CooldownRowView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            header
-            progressBar
+        HStack(alignment: .center, spacing: 14) {
             doneButton
+
+            VStack(alignment: .leading, spacing: 12) {
+                header
+                progressBar
+            }
         }
         .padding(16)
         .background(cardBackground)
@@ -40,18 +43,11 @@ struct CooldownRowView: View {
 
     private var header: some View {
         HStack(alignment: .firstTextBaseline, spacing: 12) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(cooldown.name)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-
-                Text(cooldown.cooleur.displayName)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-            }
+            Text(cooldown.name)
+                .font(.headline)
+                .foregroundStyle(.primary)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
 
             Spacer(minLength: 12)
 
@@ -70,12 +66,13 @@ struct CooldownRowView: View {
 
     private var doneButton: some View {
         Button(action: onDone) {
-            Text("C’est fait")
-                .font(.subheadline.weight(.semibold))
-                .frame(maxWidth: .infinity, minHeight: 38)
+            Image(systemName: "checkmark.circle.fill")
+                .font(.title2.weight(.semibold))
+                .foregroundStyle(fillColor)
+                .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
         }
-        .buttonStyle(.borderedProminent)
-        .tint(Color(hex: cooldown.cooleur.darkHex))
+        .buttonStyle(.plain)
         .accessibilityLabel("Marquer \(cooldown.name) comme fait")
     }
 
@@ -101,7 +98,7 @@ struct CooldownRowView: View {
     }
 }
 
-#Preview("Mostly full") {
+#Preview("Check on left") {
     CooldownRowView(
         cooldown: Cooldown(
             name: "Appeler maman",

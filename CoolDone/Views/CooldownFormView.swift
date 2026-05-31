@@ -42,7 +42,7 @@ struct CooldownFormView: View {
         _name = State(initialValue: cooldown?.name ?? "")
         _duration = State(initialValue: cooldown?.duration ?? .threeDays)
         _cooleur = State(initialValue: cooldown?.cooleur ?? .mint)
-        _notificationsEnabled = State(initialValue: cooldown?.notificationsEnabled ?? false)
+        _notificationsEnabled = State(initialValue: cooldown?.notificationsEnabled ?? true)
     }
 
     var body: some View {
@@ -90,7 +90,7 @@ struct CooldownFormView: View {
     }
 
     private var durationSection: some View {
-        Section("Rythme") {
+        Section("J’aimerais le faire tous les...") {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 82), spacing: 10)], spacing: 10) {
                 ForEach(CooldownDuration.allCases) { option in
                     Button {
@@ -113,16 +113,16 @@ struct CooldownFormView: View {
 
     private var cooleurSection: some View {
         Section("Cooleur") {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 88), spacing: 12)], spacing: 12) {
-                ForEach(Cooleur.allCases) { option in
-                    Button {
-                        cooleur = option
-                    } label: {
-                        VStack(spacing: 8) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 14) {
+                    ForEach(Cooleur.allCases) { option in
+                        Button {
+                            cooleur = option
+                        } label: {
                             ZStack {
                                 Circle()
                                     .fill(Color(hex: option.brightHex))
-                                    .frame(width: 34, height: 34)
+                                    .frame(width: 38, height: 38)
 
                                 if cooleur == option {
                                     Image(systemName: "checkmark")
@@ -130,37 +130,23 @@ struct CooldownFormView: View {
                                         .foregroundStyle(.white)
                                 }
                             }
-
-                            Text(option.displayName)
-                                .font(.caption)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.75)
+                            .frame(width: 44, height: 44)
+                            .contentShape(Circle())
                         }
-                        .frame(maxWidth: .infinity, minHeight: 74)
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(option.displayName)
+                        .accessibilityValue(cooleur == option ? "Sélectionnée" : "")
                     }
-                    .buttonStyle(.plain)
-                    .padding(8)
-                    .background(cooleurBackground(for: option))
-                    .accessibilityLabel(option.displayName)
-                    .accessibilityValue(cooleur == option ? "Sélectionnée" : "")
                 }
+                .padding(.vertical, 4)
             }
-            .padding(.vertical, 4)
+            .scrollClipDisabled()
         }
     }
 
     private func durationBackground(for option: CooldownDuration) -> some View {
         RoundedRectangle(cornerRadius: 12, style: .continuous)
             .fill(duration == option ? Color(hex: cooleur.darkHex) : Color(.secondarySystemGroupedBackground))
-    }
-
-    private func cooleurBackground(for option: Cooleur) -> some View {
-        RoundedRectangle(cornerRadius: 14, style: .continuous)
-            .fill(cooleur == option ? Color(hex: option.pastelHex) : Color(.secondarySystemGroupedBackground))
-            .overlay(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(cooleur == option ? Color(hex: option.darkHex) : .clear, lineWidth: 2)
-            )
     }
 
     private var notificationSection: some View {
@@ -208,11 +194,11 @@ struct CooldownFormView: View {
     }
 }
 
-#Preview("Create") {
+#Preview("Create with horizontal Cooleurs") {
     CooldownFormView(onCancel: {}, onSave: { _ in })
 }
 
-#Preview("Edit") {
+#Preview("Edit with week duration") {
     CooldownFormView(
         cooldown: Cooldown(
             name: "Appeler maman",

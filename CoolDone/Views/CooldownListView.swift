@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CooldownListView: View {
+    @Environment(\.scenePhase) private var scenePhase
+
     @State private var store: CooldownStore
     @State private var isPresentingCreation = false
     @State private var editedCooldown: Cooldown?
@@ -65,6 +67,13 @@ struct CooldownListView: View {
                 Button("Annuler", role: .cancel) {
                     cooldownPendingDeletion = nil
                 }
+            }
+            .onChange(of: scenePhase) { _, phase in
+                guard phase == .active else {
+                    return
+                }
+
+                store.reloadFromStorage()
             }
         }
     }

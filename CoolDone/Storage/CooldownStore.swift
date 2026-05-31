@@ -8,7 +8,12 @@
 import Foundation
 import Observation
 
+#if canImport(WidgetKit)
+import WidgetKit
+#endif
+
 typealias CooldownDateProvider = () -> Date
+typealias WidgetTimelineReloader = @MainActor () -> Void
 
 @MainActor
 @Observable
@@ -18,6 +23,7 @@ final class CooldownStore {
     private let storage: CooldownStorageProtocol
     private let notificationScheduler: CooldownNotificationScheduling
     private let dateProvider: CooldownDateProvider
+    private let widgetTimelineReloader: WidgetTimelineReloader
 
     var sortedCooldowns: [Cooldown] {
         let now = dateProvider()
@@ -40,11 +46,13 @@ final class CooldownStore {
     init(
         storage: CooldownStorageProtocol = CooldownStorage(),
         notificationScheduler: CooldownNotificationScheduling = CooldownNotificationScheduler(),
-        dateProvider: @escaping CooldownDateProvider = Date.init
+        dateProvider: @escaping CooldownDateProvider = Date.init,
+        widgetTimelineReloader: @escaping WidgetTimelineReloader = CooldownStore.reloadWidgetTimelines
     ) {
         self.storage = storage
         self.notificationScheduler = notificationScheduler
         self.dateProvider = dateProvider
+        self.widgetTimelineReloader = widgetTimelineReloader
         self.cooldowns = storage.loadCooldowns()
     }
 
@@ -52,6 +60,10 @@ final class CooldownStore {
         cooldowns.append(cooldown)
         save()
         updateNotification(for: cooldown)
+    }
+
+    func reloadFromStorage() {
+        cooldowns = storage.loadCooldowns()
     }
 
     func updateCooldown(_ cooldown: Cooldown) {
@@ -94,5 +106,12 @@ final class CooldownStore {
 
     private func save() {
         storage.saveCooldowns(cooldowns)
+        widgetTimelineReloader()
+    }
+
+    private static func reloadWidgetTimelines() {
+        #if canImport(WidgetKit)
+        WidgetCenter.shared.reloadAllTimelines()
+        #endif
     }
 }

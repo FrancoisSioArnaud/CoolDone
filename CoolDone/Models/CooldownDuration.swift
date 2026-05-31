@@ -26,7 +26,21 @@ enum CooldownDuration: Int, CaseIterable, Codable, Equatable, Identifiable {
     }
 
     var label: String {
-        "\(durationInDays) jours"
+        let weeks = durationInDays / 7
+        let days = durationInDays % 7
+
+        guard weeks > 0 else {
+            return "\(days) \(days == 1 ? "jour" : "jours")"
+        }
+
+        let weekLabel = "\(weeks) \(weeks == 1 ? "semaine" : "semaines")"
+
+        guard days > 0 else {
+            return weekLabel
+        }
+
+        let dayLabel = "\(days) \(days == 1 ? "jour" : "jours")"
+        return "\(weekLabel) et \(dayLabel)"
     }
 
     var durationInDays: Int {
