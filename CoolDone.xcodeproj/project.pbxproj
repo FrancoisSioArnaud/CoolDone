@@ -10,6 +10,16 @@
 		2B3A87EE2FCC9E910013AA2E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3A87ED2FCC9E910013AA2E /* WidgetKit.framework */; };
 		2B3A87F02FCC9E910013AA2E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3A87EF2FCC9E910013AA2E /* SwiftUI.framework */; };
 		2B3A87FD2FCC9E910013AA2E /* CoolDownWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2B3A87EB2FCC9E910013AA2E /* CoolDownWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD0000012F00000000000001 /* CoolDoneSharedConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000022F00000000000002 /* CoolDoneSharedConfiguration.swift */; };
+		CD0000032F00000000000003 /* Cooldown.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000042F00000000000004 /* Cooldown.swift */; };
+		CD0000052F00000000000005 /* CooldownDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000062F00000000000006 /* CooldownDuration.swift */; };
+		CD0000072F00000000000007 /* Cooleur.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000082F00000000000008 /* Cooleur.swift */; };
+		CD0000092F00000000000009 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000102F00000000000010 /* Color+Hex.swift */; };
+		CD0000112F00000000000011 /* CooldownProgressThresholds.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000122F00000000000012 /* CooldownProgressThresholds.swift */; };
+		CD0000132F00000000000013 /* ProgressCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000142F00000000000014 /* ProgressCalculator.swift */; };
+		CD0000152F00000000000015 /* CooldownStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000162F00000000000016 /* CooldownStorage.swift */; };
+		CD0000172F00000000000017 /* CooldownMutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000182F00000000000018 /* CooldownMutation.swift */; };
+		CD0000192F00000000000019 /* CooldownNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0000202F00000000000020 /* CooldownNotificationScheduler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +51,16 @@
 		2B3A87EB2FCC9E910013AA2E /* CoolDownWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CoolDownWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B3A87ED2FCC9E910013AA2E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2B3A87EF2FCC9E910013AA2E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		CD0000022F00000000000002 /* CoolDoneSharedConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolDone/Shared/CoolDoneSharedConfiguration.swift; sourceTree = "<group>"; };
+		CD0000042F00000000000004 /* Cooldown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolDone/Models/Cooldown.swift; sourceTree = "<group>"; };
+		CD0000062F00000000000006 /* CooldownDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolDone/Models/CooldownDuration.swift; sourceTree = "<group>"; };
+		CD0000082F00000000000008 /* Cooleur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolDone/Models/Cooleur.swift; sourceTree = "<group>"; };
+		CD0000102F00000000000010 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoolDone/Shared/Color+Hex.swift"; sourceTree = "<group>"; };
+		CD0000122F00000000000012 /* CooldownProgressThresholds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolDone/Shared/CooldownProgressThresholds.swift; sourceTree = "<group>"; };
+		CD0000142F00000000000014 /* ProgressCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolDone/Shared/ProgressCalculator.swift; sourceTree = "<group>"; };
+		CD0000162F00000000000016 /* CooldownStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolDone/Storage/CooldownStorage.swift; sourceTree = "<group>"; };
+		CD0000182F00000000000018 /* CooldownMutation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolDone/Shared/CooldownMutation.swift; sourceTree = "<group>"; };
+		CD0000202F00000000000020 /* CooldownNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolDone/Notifications/CooldownNotificationScheduler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -94,6 +114,16 @@
 			children = (
 				2B3A87DB2FCC9E730013AA2E /* CoolDone */,
 				2B3A87F12FCC9E910013AA2E /* CoolDownWidget */,
+				CD0000022F00000000000002 /* CoolDoneSharedConfiguration.swift */,
+				CD0000042F00000000000004 /* Cooldown.swift */,
+				CD0000062F00000000000006 /* CooldownDuration.swift */,
+				CD0000082F00000000000008 /* Cooleur.swift */,
+				CD0000102F00000000000010 /* Color+Hex.swift */,
+				CD0000122F00000000000012 /* CooldownProgressThresholds.swift */,
+				CD0000142F00000000000014 /* ProgressCalculator.swift */,
+				CD0000162F00000000000016 /* CooldownStorage.swift */,
+				CD0000182F00000000000018 /* CooldownMutation.swift */,
+				CD0000202F00000000000020 /* CooldownNotificationScheduler.swift */,
 				2B3A87EC2FCC9E910013AA2E /* Frameworks */,
 				2B3A87DA2FCC9E730013AA2E /* Products */,
 			);
@@ -178,9 +208,19 @@
 				TargetAttributes = {
 					2B3A87D82FCC9E730013AA2E = {
 						CreatedOnToolsVersion = 26.5;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					2B3A87EA2FCC9E910013AA2E = {
 						CreatedOnToolsVersion = 26.5;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -233,6 +273,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD0000012F00000000000001 /* CoolDoneSharedConfiguration.swift in Sources */,
+				CD0000032F00000000000003 /* Cooldown.swift in Sources */,
+				CD0000052F00000000000005 /* CooldownDuration.swift in Sources */,
+				CD0000072F00000000000007 /* Cooleur.swift in Sources */,
+				CD0000092F00000000000009 /* Color+Hex.swift in Sources */,
+				CD0000112F00000000000011 /* CooldownProgressThresholds.swift in Sources */,
+				CD0000132F00000000000013 /* ProgressCalculator.swift in Sources */,
+				CD0000152F00000000000015 /* CooldownStorage.swift in Sources */,
+				CD0000172F00000000000017 /* CooldownMutation.swift in Sources */,
+				CD0000192F00000000000019 /* CooldownNotificationScheduler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +424,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = CoolDone/CoolDone.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CC9SW439L6;
 				ENABLE_PREVIEWS = YES;
@@ -381,7 +432,6 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -396,7 +446,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -406,6 +456,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = CoolDone/CoolDone.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CC9SW439L6;
 				ENABLE_PREVIEWS = YES;
@@ -413,7 +464,6 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -428,7 +478,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -438,6 +488,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = CoolDownWidget/CoolDownWidgetExtension.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CC9SW439L6;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -458,7 +509,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -468,6 +519,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = CoolDownWidget/CoolDownWidgetExtension.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CC9SW439L6;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -488,7 +540,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

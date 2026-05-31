@@ -5,7 +5,6 @@
 //  Created by François Arnaud on 31/05/2026.
 //
 
-import AppIntents
 import SwiftUI
 import WidgetKit
 
@@ -38,17 +37,5 @@ extension CoolDownWidgetControl {
             let isRunning = true // Check if the timer is running
             return isRunning
         }
-    }
-}
-
-struct StartTimerIntent: SetValueIntent {
-    static let title: LocalizedStringResource = "Start a timer"
-
-    @Parameter(title: "Timer is running")
-    var value: Bool
-
-    func perform() async throws -> some IntentResult {
-        // Start / stop the timer based on `value`.
-        return .result()
     }
 }
