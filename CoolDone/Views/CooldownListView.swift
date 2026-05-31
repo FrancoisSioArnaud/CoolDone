@@ -14,7 +14,12 @@ struct CooldownListView: View {
     @State private var cooldownPendingDeletion: Cooldown?
 
     @MainActor
-    init(store: CooldownStore = CooldownStore()) {
+    init() {
+        _store = State(initialValue: CooldownStore())
+    }
+
+    @MainActor
+    init(store: CooldownStore) {
         _store = State(initialValue: store)
     }
 
