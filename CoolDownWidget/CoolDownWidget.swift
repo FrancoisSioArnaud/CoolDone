@@ -8,60 +8,11 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
-    }
-
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
-        completion(entry)
-    }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
-    }
-
-//    func relevances() async -> WidgetRelevances<Void> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
-}
-
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let emoji: String
-}
-
-struct CoolDownWidgetEntryView : View {
-    var entry: Provider.Entry
-
-    var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
-        }
-    }
-}
-
 struct CoolDownWidget: Widget {
     let kind: String = "CoolDownWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: CoolDownWidgetProvider()) { entry in
             if #available(iOS 17.0, *) {
                 CoolDownWidgetEntryView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
@@ -71,14 +22,43 @@ struct CoolDownWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("CoolDone")
+        .description("Garde un œil sur tes Cooldowns.")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
 
-#Preview(as: .systemSmall) {
+private let previewDate = Date(timeIntervalSinceReferenceDate: 800_000_000)
+
+#Preview("Empty", as: .systemMedium) {
     CoolDownWidget()
 } timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
+    CoolDownWidgetEntry(date: previewDate, cooldowns: [])
+}
+
+#Preview("Medium", as: .systemMedium) {
+    CoolDownWidget()
+} timeline: {
+    CoolDownWidgetEntry(
+        date: previewDate,
+        cooldowns: CoolDownWidgetProvider.previewCooldowns(referenceDate: previewDate)
+    )
+}
+
+#Preview("Large", as: .systemLarge) {
+    CoolDownWidget()
+} timeline: {
+    CoolDownWidgetEntry(
+        date: previewDate,
+        cooldowns: CoolDownWidgetProvider.previewCooldowns(referenceDate: previewDate)
+    )
+}
+
+#Preview("Small", as: .systemSmall) {
+    CoolDownWidget()
+} timeline: {
+    CoolDownWidgetEntry(
+        date: previewDate,
+        cooldowns: CoolDownWidgetProvider.previewCooldowns(referenceDate: previewDate)
+    )
 }
