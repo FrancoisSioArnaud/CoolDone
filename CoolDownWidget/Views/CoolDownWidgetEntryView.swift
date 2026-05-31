@@ -88,39 +88,50 @@ private struct CoolDownWidgetRow: View {
         Color(hex: cooldown.cooleur.pastelHex).opacity(0.55)
     }
 
+    private var editURL: URL {
+        URL(string: "cooldone://cooldown/\(cooldown.id.uuidString)/edit")!
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            HStack(alignment: .firstTextBaseline, spacing: 6) {
-                Text(cooldown.name)
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.primary)
-                    .lineLimit(1)
-
-                Spacer(minLength: 4)
-
-                Button(intent: DoneCooldownIntent(cooldownID: cooldown.id.uuidString)) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.title3.weight(.semibold))
-                        .foregroundStyle(fillColor)
-                        .frame(width: 32, height: 32)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Marquer \(cooldown.name) comme fait")
+        HStack(alignment: .center, spacing: 8) {
+            Button(intent: DoneCooldownIntent(cooldownID: cooldown.id.uuidString)) {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(fillColor)
+                    .frame(width: 32, height: 32)
+                    .contentShape(Rectangle())
             }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Marquer \(cooldown.name) comme fait")
 
-            GeometryReader { proxy in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(trackColor)
+            Link(destination: editURL) {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(cooldown.name)
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.primary)
+                        .lineLimit(1)
 
-                    Capsule()
-                        .fill(fillColor)
-                        .frame(width: proxy.size.width * progress)
+                    progressBar
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
             }
-            .frame(height: 8)
-            .accessibilityHidden(true)
+            .buttonStyle(.plain)
         }
+    }
+
+    private var progressBar: some View {
+        GeometryReader { proxy in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(trackColor)
+
+                Capsule()
+                    .fill(fillColor)
+                    .frame(width: proxy.size.width * progress)
+            }
+        }
+        .frame(height: 8)
+        .accessibilityHidden(true)
     }
 }

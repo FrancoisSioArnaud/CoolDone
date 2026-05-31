@@ -35,10 +35,19 @@ struct CooldownRowView: View {
                 header
                 progressBar
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(16)
-        .background(cardBackground)
+        .background {
+            Button(action: onEdit) {
+                cardBackground
+            }
+            .buttonStyle(.plain)
+            .accessibilityHidden(true)
+        }
         .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAction(named: "Modifier", onEdit)
     }
 
     private var header: some View {
@@ -98,7 +107,7 @@ struct CooldownRowView: View {
     }
 }
 
-#Preview("Check on left") {
+#Preview("Check on left, card opens edit") {
     CooldownRowView(
         cooldown: Cooldown(
             name: "Appeler maman",

@@ -66,6 +66,10 @@ final class CooldownStore {
         cooldowns = storage.loadCooldowns()
     }
 
+    func cooldown(id: Cooldown.ID) -> Cooldown? {
+        cooldowns.first { $0.id == id }
+    }
+
     func updateCooldown(_ cooldown: Cooldown) {
         guard let index = cooldowns.firstIndex(where: { $0.id == cooldown.id }) else {
             return

@@ -64,6 +64,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CD0000222F00000000000022 /* Exceptions for "CoolDone" folder in "CoolDone" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2B3A87D82FCC9E730013AA2E /* CoolDone */;
+		};
 		2B3A87FE2FCC9E910013AA2E /* Exceptions for "CoolDownWidget" folder in "CoolDownWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -76,6 +83,9 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2B3A87DB2FCC9E730013AA2E /* CoolDone */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CD0000222F00000000000022 /* Exceptions for "CoolDone" folder in "CoolDone" target */,
+			);
 			path = CoolDone;
 			sourceTree = "<group>";
 		};
@@ -429,6 +439,7 @@
 				DEVELOPMENT_TEAM = CC9SW439L6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CoolDone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -461,6 +472,7 @@
 				DEVELOPMENT_TEAM = CC9SW439L6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CoolDone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

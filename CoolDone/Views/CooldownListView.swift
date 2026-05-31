@@ -75,6 +75,7 @@ struct CooldownListView: View {
 
                 store.reloadFromStorage()
             }
+            .onOpenURL(perform: handleOpenURL)
         }
     }
 
@@ -146,6 +147,46 @@ struct CooldownListView: View {
 
         store.deleteCooldown(id: cooldownPendingDeletion.id)
         self.cooldownPendingDeletion = nil
+    }
+
+    private func handleOpenURL(_ url: URL) {
+        guard let cooldownID = cooldownIDToEdit(from: url) else {
+            return
+        }
+
+        openCooldownEditor(id: cooldownID)
+    }
+
+    private func openCooldownEditor(id: Cooldown.ID) {
+        store.reloadFromStorage()
+
+        guard let cooldown = store.cooldown(id: id) else {
+            return
+        }
+
+        isPresentingCreation = false
+        cooldownPendingDeletion = nil
+        editedCooldown = cooldown
+    }
+
+    private func cooldownIDToEdit(from url: URL) -> Cooldown.ID? {
+        guard
+            url.scheme == "cooldone",
+            url.host == "cooldown"
+        else {
+            return nil
+        }
+
+        let pathComponents = url.pathComponents.filter { $0 != "/" }
+
+        guard
+            pathComponents.count == 2,
+            pathComponents[1] == "edit"
+        else {
+            return nil
+        }
+
+        return UUID(uuidString: pathComponents[0])
     }
 }
 
