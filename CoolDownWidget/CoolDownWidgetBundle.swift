@@ -12,6 +12,5 @@ import SwiftUI
 struct CoolDownWidgetBundle: WidgetBundle {
     var body: some Widget {
         CoolDownWidget()
-        CoolDownWidgetControl()
     }
 }

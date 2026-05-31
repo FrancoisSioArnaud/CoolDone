@@ -26,6 +26,10 @@ struct CooldownStorage: CooldownStorageProtocol {
         encoder: JSONEncoder = JSONEncoder(),
         decoder: JSONDecoder = JSONDecoder()
     ) {
+        if userDefaults == nil {
+            NSLog("CoolDone: App Group UserDefaults unavailable for %@. Falling back to standard UserDefaults; widget data may not be shared.", CoolDoneSharedConfiguration.appGroupIdentifier)
+        }
+
         self.userDefaults = userDefaults ?? legacyUserDefaults
         self.legacyUserDefaults = legacyUserDefaults
         self.storageKey = storageKey
@@ -47,7 +51,9 @@ struct CooldownStorage: CooldownStorageProtocol {
         do {
             let data = try encoder.encode(cooldowns)
             userDefaults.set(data, forKey: storageKey)
+            userDefaults.synchronize()
         } catch {
+            NSLog("CoolDone: Failed to encode Cooldowns for storage: %@", String(describing: error))
             return
         }
     }
@@ -74,6 +80,7 @@ struct CooldownStorage: CooldownStorageProtocol {
         do {
             return try decoder.decode([Cooldown].self, from: data)
         } catch {
+            NSLog("CoolDone: Failed to decode Cooldowns from storage: %@", String(describing: error))
             return nil
         }
     }

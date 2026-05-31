@@ -99,11 +99,13 @@ private struct CoolDownWidgetRow: View {
                 Spacer(minLength: 4)
 
                 Button(intent: DoneCooldownIntent(cooldownID: cooldown.id.uuidString)) {
-                    Text("C’est fait")
-                        .font(.caption2.weight(.semibold))
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.title3.weight(.semibold))
+                        .foregroundStyle(fillColor)
+                        .frame(width: 32, height: 32)
+                        .contentShape(Rectangle())
                 }
-                .buttonStyle(.bordered)
-                .controlSize(.mini)
+                .buttonStyle(.plain)
                 .accessibilityLabel("Marquer \(cooldown.name) comme fait")
             }
 
