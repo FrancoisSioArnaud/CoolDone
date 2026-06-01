@@ -116,7 +116,7 @@ struct CooldownFormView: View {
     }
 
     private var durationSection: some View {
-        Section("J’aimerais le faire tous les \(duration.label)") {
+        Section("Tous les \(duration.label)") {
             Slider(
                 value: durationSliderBinding,
                 in: durationIndexRange,
