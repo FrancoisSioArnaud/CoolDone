@@ -93,7 +93,7 @@ struct CooldownListView: View {
 
     private func cooldownList(now: Date) -> some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 14) {
+            LazyVStack(alignment: .leading, spacing: 10) {
                 Text("Des petits rythmes, sans pression.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
@@ -110,7 +110,7 @@ struct CooldownListView: View {
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 20)
+            .padding(.vertical, 16)
         }
         .background(Color(.systemGroupedBackground))
     }
