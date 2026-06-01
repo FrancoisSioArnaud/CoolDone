@@ -28,16 +28,17 @@ struct CooldownRowView: View {
     }
 
     var body: some View {
-        HStack(alignment: .center, spacing: 14) {
+        HStack(alignment: .center, spacing: 12) {
             doneButton
 
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 9) {
                 header
                 progressBar
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(16)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
         .background {
             Button(action: onEdit) {
                 cardBackground
@@ -51,7 +52,7 @@ struct CooldownRowView: View {
     }
 
     private var header: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 12) {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
             Text(cooldown.name)
                 .font(.headline)
                 .foregroundStyle(.primary)

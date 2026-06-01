@@ -12,6 +12,9 @@ struct CooldownFormView: View {
     private let onCancel: () -> Void
     private let onSave: (Cooldown) -> Void
 
+    private let durations = CooldownDuration.allCases
+    private let formBackgroundColor = Color(.systemGroupedBackground)
+
     @State private var name: String
     @State private var duration: CooldownDuration
     @State private var cooleur: Cooleur
@@ -28,6 +31,29 @@ struct CooldownFormView: View {
 
     private var canSave: Bool {
         !trimmedName.isEmpty
+    }
+
+    private var selectedDurationIndex: Double {
+        guard let index = durations.firstIndex(of: duration) else {
+            return 0
+        }
+
+        return Double(index)
+    }
+
+    private var durationIndexRange: ClosedRange<Double> {
+        0...Double(max(durations.count - 1, 0))
+    }
+
+    private var durationSliderBinding: Binding<Double> {
+        Binding(
+            get: { selectedDurationIndex },
+            set: { newValue in
+                let roundedIndex = Int(newValue.rounded())
+                let clampedIndex = min(max(roundedIndex, 0), durations.count - 1)
+                duration = durations[clampedIndex]
+            }
+        )
     }
 
     init(
@@ -90,24 +116,14 @@ struct CooldownFormView: View {
     }
 
     private var durationSection: some View {
-        Section("J’aimerais le faire tous les...") {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 82), spacing: 10)], spacing: 10) {
-                ForEach(CooldownDuration.allCases) { option in
-                    Button {
-                        duration = option
-                    } label: {
-                        Text(option.label)
-                            .font(.subheadline.weight(.semibold))
-                            .frame(maxWidth: .infinity, minHeight: 38)
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(duration == option ? .white : .primary)
-                    .background(durationBackground(for: option))
-                    .accessibilityLabel(option.label)
-                    .accessibilityValue(duration == option ? "Sélectionné" : "")
-                }
-            }
-            .padding(.vertical, 4)
+        Section("J’aimerais le faire tous les \(duration.label)") {
+            Slider(
+                value: durationSliderBinding,
+                in: durationIndexRange,
+                step: 1
+            )
+            .accessibilityLabel("Rythme")
+            .accessibilityValue(duration.label)
         }
     }
 
@@ -127,7 +143,7 @@ struct CooldownFormView: View {
                                 if cooleur == option {
                                     Image(systemName: "checkmark")
                                         .font(.caption.weight(.bold))
-                                        .foregroundStyle(.white)
+                                        .foregroundStyle(formBackgroundColor)
                                 }
                             }
                             .frame(width: 44, height: 44)
@@ -142,11 +158,6 @@ struct CooldownFormView: View {
             }
             .scrollClipDisabled()
         }
-    }
-
-    private func durationBackground(for option: CooldownDuration) -> some View {
-        RoundedRectangle(cornerRadius: 12, style: .continuous)
-            .fill(duration == option ? Color(hex: cooleur.darkHex) : Color(.secondarySystemGroupedBackground))
     }
 
     private var notificationSection: some View {
@@ -194,11 +205,11 @@ struct CooldownFormView: View {
     }
 }
 
-#Preview("Create with horizontal Cooleurs") {
+#Preview("Create with duration slider") {
     CooldownFormView(onCancel: {}, onSave: { _ in })
 }
 
-#Preview("Edit with week duration") {
+#Preview("Edit with selected Cooleur") {
     CooldownFormView(
         cooldown: Cooldown(
             name: "Appeler maman",
