@@ -14,6 +14,11 @@ struct CooldownListView: View {
     @State private var isPresentingCreation = false
     @State private var editedCooldown: Cooldown?
     @State private var cooldownPendingDeletion: Cooldown?
+    @State private var preservedDisplayOrder: [Cooldown.ID]?
+    @State private var reorderSequenceToken: UUID?
+
+    private static let doneReorderAnimation = Animation.spring(response: 0.25, dampingFraction: 0.85)
+    private static let reorderDelay: UInt64 = 70_000_000
 
     @MainActor
     init() {
@@ -99,11 +104,11 @@ struct CooldownListView: View {
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 2)
 
-                ForEach(store.sortedCooldowns) { cooldown in
+                ForEach(displayedCooldowns, id: \.id) { cooldown in
                     CooldownRowView(
                         cooldown: cooldown,
                         now: now,
-                        onDone: { store.markDone(id: cooldown.id) },
+                        onDone: { markDone(id: cooldown.id) },
                         onEdit: { editedCooldown = cooldown },
                         onDelete: { cooldownPendingDeletion = cooldown }
                     )
@@ -113,6 +118,28 @@ struct CooldownListView: View {
             .padding(.vertical, 16)
         }
         .background(Color(.systemGroupedBackground))
+    }
+
+    private var displayedCooldowns: [Cooldown] {
+        let sortedCooldowns = store.sortedCooldowns
+
+        guard let preservedDisplayOrder else {
+            return sortedCooldowns
+        }
+
+        let currentRanks = Dictionary(
+            uniqueKeysWithValues: sortedCooldowns.enumerated().map { ($0.element.id, $0.offset) }
+        )
+        let preservedRanks = Dictionary(
+            uniqueKeysWithValues: preservedDisplayOrder.enumerated().map { ($0.element, $0.offset) }
+        )
+
+        return sortedCooldowns.sorted { lhs, rhs in
+            let lhsRank = preservedRanks[lhs.id] ?? preservedDisplayOrder.count + (currentRanks[lhs.id] ?? 0)
+            let rhsRank = preservedRanks[rhs.id] ?? preservedDisplayOrder.count + (currentRanks[rhs.id] ?? 0)
+
+            return lhsRank < rhsRank
+        }
     }
 
     private var deletionConfirmationBinding: Binding<Bool> {
@@ -138,6 +165,31 @@ struct CooldownListView: View {
     private func updateCooldown(_ cooldown: Cooldown) {
         store.updateCooldown(cooldown)
         editedCooldown = nil
+    }
+
+    private func markDone(id: Cooldown.ID) {
+        preservedDisplayOrder = displayedCooldowns.map(\.id)
+
+        let sequenceToken = UUID()
+        reorderSequenceToken = sequenceToken
+
+        withAnimation(Self.doneReorderAnimation) {
+            store.markDone(id: id)
+        }
+
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: Self.reorderDelay)
+
+            guard reorderSequenceToken == sequenceToken else {
+                return
+            }
+
+            withAnimation(Self.doneReorderAnimation) {
+                preservedDisplayOrder = nil
+            }
+
+            reorderSequenceToken = nil
+        }
     }
 
     private func deletePendingCooldown() {
